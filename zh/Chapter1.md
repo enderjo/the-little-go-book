@@ -1,20 +1,35 @@
 # Chapter 1 - The Basics
+# 第一章 - 基础
 
 Go is a compiled, statically typed language with a C-like syntax and garbage collection. What does that mean?
 
+Go是一门静态类型、编译型语言，有类C风格的语法和垃圾回收机制。这意味着什么呢？
+
 ## Compilation
+## 编译
 
 Compilation is the process of translating the source code that you write into a lower level language -- either assembly (as is the case with Go), or some other intermediary language (as with Java and C#).
 
+编译将你写的源代码转换成一种更低级的语言————可能是汇编（如Go就是这样），或者其他中间语言（如Java和C#）的过程。
+
 Compiled languages can be unpleasant to work with because compilation can be slow. It's hard to iterate quickly if you have to spend minutes or hours waiting for code to compile. Compilation speed is one of the major design goals of Go. This is good news for people working on large projects as well as those of us used to a quick feedback cycle offered by interpreted languages.
+
+因为编译可能很慢，使用编译型语言可能不是个令人愉快的事情。很难实现快速迭代因为你不得不花几分钟甚至几个小时的时间来等待编绎完成。编译速度是Go设计时的一个主要目标。这对于大项目的开发人员来说是个好消息，就像我们可以使用解释语言提供的快速反馈周期。
 
 Compiled languages tend to run faster and the executable can be run without additional dependencies (at least, that's true for languages like C, C++ and Go which compile directly to assembly).
 
+编译型语言往往运行得更快，不需要额外的依赖也可以正常运行（至少，像C、C++和Go这样直接编译成汇编的语言来说，就是如此。）
+
 ## Static Typing
+## 静态类型
 
 Being statically typed means that variables must be of a specific type (int, string, bool, []byte, etc.). This is either achieved by specifying the type when the variable is declared or, in many cases, letting the compiler infer the type (we'll look at examples shortly).
 
+静态类型是指变量必须指定一个类型（整型、字符串、布尔、字节数组等等）。可以在申明变量的时候指定数据类型，也可以,大多数情况是让编译器来推断类型（我们将会在接下来的例子中看到）。
+
 There's a lot more that can be said about static typing, but I believe it's something better understood by looking at code. If you're used to dynamically typed languages, you might find this cumbersome. You're not wrong, but there are advantages, especially when you pair static typing with compilation. The two are often conflated. It's true that when you have one, you normally have the other but it isn't a hard rule. With a rigid type system, a compiler is able to detect problems beyond mere syntactical mistakes as well as make further optimizations.
+
+关于静态类型还有很多可以介绍，但我相信理解它更好的方式是阅读代码。如果你用过动态语言，你可能会觉得有点繁琐。
 
 ## C-Like Syntax
 
