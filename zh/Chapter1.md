@@ -29,13 +29,18 @@ Being statically typed means that variables must be of a specific type (int, str
 
 There's a lot more that can be said about static typing, but I believe it's something better understood by looking at code. If you're used to dynamically typed languages, you might find this cumbersome. You're not wrong, but there are advantages, especially when you pair static typing with compilation. The two are often conflated. It's true that when you have one, you normally have the other but it isn't a hard rule. With a rigid type system, a compiler is able to detect problems beyond mere syntactical mistakes as well as make further optimizations.
 
-关于静态类型还有很多可以介绍，但我相信理解它更好的方式是阅读代码。如果你用过动态语言，你可能会觉得有点繁琐。
+关于静态类型还有很多可以介绍，但我相信理解它更好的方式是阅读代码。如果你习惯于动态语言，你可能觉得这比较麻烦。没错，不过静态类型也有优势，尤其是和编译相结合的时候。静态类型和编译这两者经常被混为一谈。虽然这不是硬性的规定，但通常情况下，有其一就必有其二。在严格类型系统中，编译器除了能够检测出单纯的语法错误问题还能做出进一步的优化。
 
 ## C-Like Syntax
+## 类C语法
 
 Saying that a language has a C-like syntax means that if you're used to any other C-like languages such as C, C++, Java, JavaScript and C#, then you're going to find Go familiar -- superficially, at least. For example, it means `&&` is used as a boolean AND, `==` is used to compare equality, `{` and `}` start and end a scope, and array indexes start at 0.
 
+说一门语言有一个类C的语法意味着，如果你使用的任何其他类似C语言，如C，C ++，Java，JavaScript以及C＃，那么你会发现Go的相似之处————至少从表面上看。比如，`&&`表示逻辑与,`==`表示相等判断，`{}`和`}`是作用域的开始和结束，以及数组从0开始索引。
+
 C-like syntax also tends to mean semi-colon terminated lines and parentheses around conditions. Go does away with both of these, though parentheses are still used to control precedence. For example, an `if` statement looks like this:
+
+类C语法也往往使用分号结束行和条件表达式用括号括起来。Go没用使用这两种方式，尽管依然使用括号来控制优先权。比如，一个`if`表达式看起来像这样：
 
 ```go
 if name == "Leto" {
@@ -45,6 +50,8 @@ if name == "Leto" {
 
 And in more complicated cases, parentheses are still useful:
 
+在更复杂的情况下，括号依然有用：
+
 ```go
 if (name == "Goku" && power > 9000) || (name == "gohan" && power < 4000)  {
   print("super Saiyan")
@@ -53,15 +60,25 @@ if (name == "Goku" && power > 9000) || (name == "gohan" && power < 4000)  {
 
 Beyond this, Go is much closer to C than C# or Java - not only in terms of syntax, but in terms of purpose. That's reflected in the terseness and simplicity of the language which will hopefully start to become obvious as you learn it.
 
+除此之外，Go比C#或者Java更接近C，不仅在语法方面，还在用途方面。这体现在语言风格的简洁和简单，随着不断深入学习，你会越来越明显的体会到这种特性。
+
 ## Garbage Collected
+## 垃圾回收机制
 
 Some variables, when created, have an easy-to-define life. A variable local to a function, for example, disappears when the function exits. In other cases, it isn't so obvious -- at least to a compiler. For example, the lifetime of a variable returned by a function or referenced by other variables and objects can be tricky to determine. Without garbage collection, it's up to developers to free the memory associated with such variables at a point where the developer knows the variable isn't needed. How? In C, you'd literally `free(str);` the variable.
 
+一些变量，在创建时就有明确的生命周期。如函数内的局部变量，当函数结束时就消失了。在另一些情况下，就没有这么明显了，起码对编译器来说是这样。比如函数中返回的变量，变量的引用和对象的引用的生命周期就很难判断了。没有垃圾回收机制的情况下，这依赖于开发人员在不需要这些变量时进行内存的释放。怎么实现？例如在c中，你需要正确的去释放一个变量的内存`free(str);`。
+
 Languages with garbage collectors (e.g., Ruby, Python, Java, JavaScript, C#, Go) are able to keep track of these and free them when they're no longer used. Garbage collection adds overhead, but it also eliminates a number of devastating bugs.
 
+有垃圾回收机制的语言（如Ruby、Python、Java、JavaScript、C#、Go）能记录变量并在不使用时进行释放。垃圾回收机制增加了开销，但也杜绝了一些破坏性的bug。
+
 ## Running Go Code
+## 运行Go代码
 
 Let's start our journey by creating a simple program and learning how to compile and execute it. Open your favorite text editor and write the following code:
+
+让我们创建一个简单的例子来学习如何编译和运行它，来开始我们的Go学习之旅。打开你最喜欢的文本编辑器，输入如下的代码：
 
 ```go
 package main
