@@ -90,9 +90,15 @@ func main() {
 
 Save the file as `main.go`. For now, you can save it anywhere you want; we don't need to live inside Go's workspace for trivial examples.
 
+将文件保存为`main.go`。开始，你可以将它保存在任何你想要的地方；作为简单的例子，我们还不需要深入理解Go的工作区。
+
 Next, open a shell/command prompt and change the directory to where you saved the file. For me, that means typing `cd ~/code`.
 
+接下来，打开一个shell/命令行，然后将目录切换到你保存文件的位置。对我来，输入`cd ~/code`就可以了。
+
 Finally, run the program by entering:
+
+最后，能过输入如下命令来运行程序：
 
 ```
 go run main.go
@@ -100,7 +106,11 @@ go run main.go
 
 If everything worked, you should see *it's over 9000!*.
 
+如果一切正常，你会看到 *it's over 9000!*。
+
 But wait, what about the compilation step? `go run` is a handy command that compiles *and* runs your code. It uses a temporary directory to build the program, executes it and then cleans itself up. You can see the location of the temporary file by running:
+
+等等，那编译过程呢？`go run`是一个方便的编译和执行代码的命令。它使用临时目录来生成程序和运行，然后清理。通过下面的代码你可以查看临时文件所在位置：
 
 ```
 go run --work main.go
@@ -108,27 +118,44 @@ go run --work main.go
 
 To explicitly compile code, use `go build`:
 
+要显示的编译代码，使用`go build`:
+
 ```
 go build main.go
 ```
 
 This will generate an executable `main` which you can run. On Linux / OSX, don't forget that you need to prefix the executable with dot-slash, so you need to type `./main`.
 
+这会生成一个可执行的`main`程序。在Linux/OSX中，不要忘记在可执行文件前面加上点和反斜杠，所有你需要输入`./main`。
+
 While developing, you can use either `go run` or `go build`. When you deploy your code however, you'll want to deploy a binary via `go build` and execute that.
 
+在开发的时候，你可以使用`go run`或者`go build`。但当你发布的时候，你需要使用`go build`来生成可执行文件并运行它。
+
+### Main
 ### Main
 
 Hopefully, the code that we just executed is understandable. We've created a function and printed out a string with the built-in `println` function. Did `go run` know what to execute because there was only a single choice? No. In Go, the entry point to a program has to be a function called `main` within a package `main`.
 
+但愿，我们刚刚的执行的代码是可以理解的。我们创建了一个函数，它调用内置的`println`函数打印一个字符串。难道是因为只有一个选择，所以`go run`才知道要执行什么吗？不是的，在Go语言中，程序的入口是`main`包中的`main`函数。
+
 We'll talk more about packages in a later chapter. For now, while we focus on understanding the basics of Go, we'll always write our code within the `main` package.
+
+后续章节我们会介绍更多包的内容。现在，为了我们着重理解Go的基础知识，我们只在`main`包中写代码。
 
 If you want, you can alter the code and change the package name. Run the code via `go run` and you should get an error. Then, change the name back to `main` but use a different function name. You should see a different error message. Try making those same changes but use `go build` instead. Notice that the code compiles, there's just no entry point to run it. This is perfectly normal when you are, for example, building a library.
 
+如果你愿意，你也可以修改代码并改变包名89。并使用`go run`去执行，你会得到一个错误信息。然后，将包名改成`main`，但是函数名不叫`main`，再次运行代码，你会得到一个不同的错误信息。使用`go build`进行相同的操作，注意编译代码时，这里没有运行代码的入口点。这是很正常的，例如当你编译一个库时。
+
 ## Imports
+## 包导入
 
 Go has a number of built-in functions, such as `println`, which can be used without reference. We can't get very far though, without making use of Go's standard library and eventually using third-party libraries. In Go, the `import` keyword is used to declare the packages that are used by the code in the file.
 
+Go有一些内建函数是不需要引入就可以直接使用，如`println`。不利用Go标准库和第三方类库的话，我们不能走得很远。在Go中，使用`import`关键字来申明代码中使用的包。
+
 Let's change our program:
+让我们来修改下程序：
 
 ```go
 package main
@@ -148,15 +175,23 @@ func main() {
 
 Which you can run via:
 
+通过下面的命令来运行它：
+
 ```
 go run main.go 9000
 ```
 
 We're now using two of Go's standard packages: `fmt` and `os`. We've also introduced another built-in function `len`. `len` returns the size of a string, or the number of values in a dictionary, or, as we see here, the number of elements in an array. If you're wondering why we expect 2 arguments, it's because the first argument -- at index 0 -- is always the path of the currently running executable. (Change the program to print it out and see for yourself.)
 
+我们用了两个Go的标准包：`fmt`和`os`。我们引入了另一个内建函数`len`。`len`返加字符串的长度，或者字典的个数，再或者，如这个例子，数组元素的个数。如果你想知道为什么我们期望是两个参数，这是因为索引为0的第一个参数是当前可执程序的路径（你可以自己修改代码将它打印出来看看）。
+
 You've probably noticed we prefix the function name with the package, e.g., `fmt.Println`. This is different from many other languages. We'll learn more about packages in later chapters. For now, knowing how to import and use a package is a good start.
 
+你可能已经注意到了函数名之前的包名了，比如：`fmt.Println`，这和其他很多语言不同。后续章节我们会学习更多包的内容。现在，知道如何导入和使用包就好了。
+
 Go is strict about importing packages. It will not compile if you import a package but don't use it. Try to run the following:
+
+Go对包导入很严格。如果导入了包，但没有使用是不能通过编译的。试试运行下面的代码：
 
 ```go
 package main
@@ -172,15 +207,23 @@ func main() {
 
 You should get two errors about `fmt` and `os` being imported and not used. Can this get annoying? Absolutely. Over time, you'll get used to it (it'll still be annoying though). Go is strict about this because unused imports can slow compilation; admittedly a problem most of us don't have to this degree.
 
+你会看到两个错误信息，显示`fmt`和`os`包被导入但是没有被使用。这会让人烦吗？绝对的。随着时间的推移，你会习惯（虽然还是烦人）。Go之所以在这点上这么严格是因为导入未使用的包会影响编译速度。不可否认的是，我们大多数人都没有这个深度。
+
 Another thing to note is that Go's standard library is well documented. You can head over to <http://golang.org/pkg/fmt/#Println> to learn more about the `Println` function that we used. You can click on that section header and see the source code. Also, scroll to the top to learn more about Go's formatting capabilities.
 
+令一个值得注意的地方就是Go的标准包的文档很完善。你可以通过<http://golang.org/pkg/fmt/#Println> 来学习更多我们用到过的`Println`的内容。你可以点击章节标题来查看源码。也可以滚动到顶部来查看更多关于Go格式化的功能。
+
 If you're ever stuck without internet access, you can get the documentation running locally via:
+如果你不能访问网络，你可以通过下面的方面运行本地的文档：
 
 ```
 godoc -http=:6060
 ```
 
 and pointing your browser to `http://localhost:6060`
+
+然后通过`http://localhost:6060`来浏览。
+
 
 ## Variables and Declarations
 
