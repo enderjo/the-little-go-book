@@ -226,12 +226,19 @@ and pointing your browser to `http://localhost:6060`
 
 
 ## Variables and Declarations
+## 变量和声明
 
 It'd be nice to begin and end our look at variables by saying *you declare and assign to a variable by doing x = 4.* Unfortunately, things are more complicated in Go. We'll begin our conversation by looking at simple examples. Then, in the next chapter, we'll expand this when we look at creating and using structures. Still, it'll probably take some time before you truly feel comfortable with it.
 
+*通过x = 4就能声明和赋值变量* ，对你来说可能是一个好的开始和结束。不幸的是，Go中要复杂一些。我们将通过简单的例子来开始我们的话题。然后，我们会在下一章节中，在讲解分创建的使用结构体的时候，我们会展开来讲解。但是，你可以需要花一些时间来适应它。
+
 You might be thinking *Woah! What can be so complicated about this?* Let's start looking at some examples.
 
+你可能会觉得 *哇！为什么这么复杂?*让我们来看些例子吧。
+
 The most explicit way to deal with variable declaration and assignment in Go is also the most verbose:
+
+在Go中最直接也是最繁索的变量声明和赋值方式是：
 
 ```go
 package main
@@ -249,17 +256,23 @@ func main() {
 
 Here, we declare a variable `power` of type `int`. By default, Go assigns a zero value to variables. Integers are assigned `0`, booleans `false`, strings `""` and so on. Next, we assign `9000` to our `power` variable. We can merge the first two lines:
 
+这里，我们声明了一个`int`类型的变量`power`。默认情况下，Go给变量赋为0值。整型赋为`0`，布尔型赋为`false`，字符串赋为`""`等等。接着，我们给变量`power`赋值为`9000`。我们可以合并开始的这两行：
+
 ```go
 var power int = 9000
 ```
 
 Still, that's a lot of typing. Go has a handy short variable declaration operator, `:=`, which can infer the type:
 
+依然，还是需要很多的输入。Go有更方便的变量声明操作符，`:=`，它可以推断类型。
+
 ```go
 power := 9000
 ```
 
 This is handy, and it works just as well with functions:
+
+这很方便，对函数也同样适用：
 
 ```go
 func main() {
@@ -272,6 +285,8 @@ func getPower() int {
 ```
 
 It's important that you remember that `:=` is used to declare the variable as well as assign a value to it. Why? Because a variable can't be declared twice (not in the same scope anyway). If you try to run the following, you'll get an error.
+
+记住`:=`用于声明和赋值变量这点很重要。为什么呢？因为一个变量不能被声明两次（在同一个作用域中）。如果你尝试运行下面的代码，你会看到一个错误信息。
 
 ```go
 func main() {
@@ -287,8 +302,11 @@ func main() {
 
 The compiler will complain with *no new variables on left side of :=*. This means that when we first declare a variable, we use `:=` but on subsequent assignment, we use the assignment operator `=`. This makes a lot of sense, but it can be tricky for your muscle memory to remember when to switch between the two.
 
+编译器会抱错提示 *:=左边不是新的变量*。这就是说我们一开始用`:=`来声明一个变量，接下来我们需要用`=`来给变量赋值。这很用意义，但是对你的记忆力来说是一个负担，因为你要记住这两者之间切换的时机。
+
 If you read the error message closely, you'll notice that *variables* is plural. That's because Go lets you assign multiple variables (using either `=` or `:=`):
 
+如果你仔细看错误信息，你会发现 *变量*用了复数形式。因为Go支持多个变量同时赋值（使用`=`或者`:=`）:
 
 ```go
 func main() {
@@ -298,6 +316,8 @@ func main() {
 ```
 
 As long as one of the variables is new, `:=` can be used. Consider:
+
+只要有一个变量是新的就可以使用`:=` 操作符。例如：
 
 ```go
 func main() {
@@ -311,7 +331,11 @@ func main() {
 
 Although `power` is being used twice with `:=`, the compiler won't complain the second time we use it, it'll see that the other variable, `name`, is a new variable and allow `:=`. However, you can't change the type of `power`. It was declared (implicitly) as an integer and thus, can only be assigned integers.
 
+虽然变量`power`使用了`:=`，但是编译器不会在第2次使用`:=`时报错，因为这里有一个新变量`name`，允许使用`:=`。但你不能改变`power`的类型。它已经被声明（隐式的）为整型，所以只能用整数来赋值。
+
 For now, the last thing to know is that, like imports, Go won't let you have unused variables. For example,
+
+最后，和包导入一样，Go不允许未使用的变量。例如：
 
 ```go
 func main() {
@@ -322,7 +346,11 @@ func main() {
 
 won't compile because `name` is declared but not used. Like unused imports it'll cause some frustration, but overall I think it helps with code cleanliness and readability.
 
+不会被编译因为变量`name`声明了但没有使用。和包导入一样会带来一些挫败感，但总的来说，这是为了代码的简洁和可读性。
+
 There's more to learn about declaration and assignments. For now, remember that you'll use `var NAME TYPE` when declaring a variable to its zero value, `NAME := VALUE` when declaring and assigning a value, and `NAME = VALUE` when assigning to a previously declared variable.
+
+声明和赋值还有内容需要学习。现在，只要记住，用`var NAME TYPE`来声明变量并赋0值，用`NAME := VALUE`声明变量并赋值，和用`NAME = VALUE`给已声明的变量赋值。
 
 ## Function Declarations
 
