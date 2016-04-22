@@ -353,8 +353,11 @@ There's more to learn about declaration and assignments. For now, remember that 
 声明和赋值还有内容需要学习。现在，只要记住，用`var NAME TYPE`来声明变量并赋0值，用`NAME := VALUE`声明变量并赋值，和用`NAME = VALUE`给已声明的变量赋值。
 
 ## Function Declarations
+## 函数声明
 
 This is a good time to point out that functions can return multiple values. Let's look at three functions: one with no return value, one with one return value, and one with two return values.
+
+现在是一个好的时机来指出函数是可以有多返回值的。让我们来看3个函数：一个没有返回值，一个有一个返回值，另一个有两个返回值。
 
 ```go
 func log(message string) {
@@ -368,6 +371,8 @@ func power(name string) (int, bool) {
 ```
 
 We'd use the last one like so:
+我们像这样来使用最后一个函数：
+
 
 ```go
 value, exists := power("goku")
@@ -378,6 +383,8 @@ if exists == false {
 
 Sometimes, you only care about one of the return values. In these cases, you assign the other values to `_`:
 
+有时，你可能只关心其中一个返回值。在这种情况下，你可以把其他值赋为`_`:
+
 ```go
 _, exists := power("goku")
 if exists == false {
@@ -387,7 +394,11 @@ if exists == false {
 
 This is more than a convention. `_`, the blank identifier, is special in that the return value isn't actually assigned. This lets you use `_` over and over again regardless of the returned type.
 
+这不仅仅是一个约定。`_`，空白标识符，尤其在用在返回值时它没有真正的赋值。无论返回值是什么类型你都可以使用`_`。
+
 Finally, there's something else that you're likely to run into with function declarations. If parameters share the same type, we can use a shorter syntax:
+
+最后，你可能遇到一些不同的函数声明方式。如果函数的参数类型都相同，那么可以用以下更简洁的方式：
 
 ```go
 func add(a, b int) int {
@@ -397,11 +408,19 @@ func add(a, b int) int {
 
 Being able to return multiple values is something you'll use often. You'll also frequently use `_` to discard a value. Named return values and the slightly less verbose parameter declaration aren't that common. Still, you'll run into all of these sooner than later so it's important to know about them.
 
+你会常常用到函数多返回值这个特性。你也会经常使用`_`去舍弃一个返回值。具名返回值和无名参数声明并不常见。但是迟早你都会遇到，最好对他们都有所了解。
+
 ## Before You Continue
+## 继续之前
 
 We looked at a number of small individual pieces and it probably feels disjointed at this point. We'll slowly build larger examples and hopefully, the pieces will start to come together.
 
+现在我们已经学习了许多的小知识点，你可能会觉得有点脱节。我们会逐步构建一个更大的例子，有望将这些小知识点串联起来。
+
 If you're coming from a dynamic language, the complexity around types and declarations might seem like a step backwards. I don't disagree with you. For some systems, dynamic languages are categorically more productive.
+
+如果你是来自动态类型语言的开发人员，你可能会觉得Go的变量类型和声明的复杂是一种倒退。我同意你的看法。对于一些系统，动态类型的语言绝对更有效率。
 
 If you're coming from a statically typed language, you're probably feeling comfortable with Go. Inferred types and multiple return values are nice (though certainly not exclusive to Go). Hopefully as we learn more, you'll appreciate the clean and terse syntax.
 
+如果你是来自静态类型语言的开发人员，你可能会习惯使用Go。类型推断和多返回值是如此的美好（尽管这不是Go独有的）。希望随着我们不断深入的学习，你会喜欢上Go干净和简洁的语法。
