@@ -1,10 +1,17 @@
 # Chapter 2 - Structures
+# 第二章 - 结构体
 
 Go isn't an object-oriented (OO) language like C++, Java, Ruby and C#. It doesn't have objects nor inheritance and thus, doesn't have the many concepts associated with OO such as polymorphism and overloading.
 
+和C++, Java, Ruby以及C#不一样，Go并不是面向对象的语言。它没有对象、继承和其他一些和面向对象相关的概念，比各多态和重载。
+
 What Go does have are structures, which can be associated with methods. Go also supports a simple but effective form of composition. Overall, it results in simpler code, but there'll be occasions where you'll miss some of what OO has to offer. (It's worth pointing out that *composition over inheritance* is an old battle cry and Go is the first language I've used that takes a firm stand on the issue.)
 
+Go有的就是结构体，可以直接绑定方法。Go支持简单便高效的组合。总的来说，它带来更简洁的代码，但在一些场合中失去OO的一些特性。（有必要指出 *组合优于继承* 是一个老早的争议，但Go是我用过的这么多语言中第一个立场这么坚定的。）
+
 Although Go doesn't do OO like you may be used to, you'll notice a lot of similarities between the definition of a structure and that of a class. A simple example is the following `Saiyan` structure:
+
+虽然Go确实不是你用过的OO样，但是你会发现结构体和类之间的很多相似之处。来看一个简单的例子，结构体`Saiyan`：
 
 ```go
 type Saiyan struct {
@@ -14,8 +21,10 @@ type Saiyan struct {
 ```
 
 We'll soon see how to add a method to this structure, much like you'd have methods as part of a class. Before we do that, we have to dive back into declarations.
+很快我们就会看到怎么往这个结构体中添加方法，就像你要类中添加方法一样。在那之前，我们细看下结构体的声明.
 
 ## Declarations and Initializations
+## 声明和初始化
 
 When we first looked at variables and declarations, we looked only at built-in types, like integers and strings. Now that we're talking about structures, we need to expand that conversation to include pointers.
 
