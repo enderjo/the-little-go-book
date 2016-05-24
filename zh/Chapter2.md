@@ -173,8 +173,11 @@ fmt.Println(goku.Power) // will print 19001
 ```
 
 ## Constructors
+## 构造器
 
 Structures don't have constructors. Instead, you create a function that returns an instance of the desired type (like a factory):
+
+结构体没有构造器。你可创建一个函数来返回一个期望类型的实例来替代（像工厂一样）：
 
 ```go
 func NewSaiyan(name string, power int) *Saiyan {
@@ -187,7 +190,11 @@ func NewSaiyan(name string, power int) *Saiyan {
 
 This pattern rubs a lot of developers the wrong way. On the one hand, it's a pretty slight syntactical change; on the other, it does feel a little less compartmentalized.
 
+这种方式导致很多开发者犯错。一方面，它有一些轻微的语法变化；另一方面，它有一点让人感觉不好区分。 
+
 Our factory doesn't have to return a pointer; this is absolutely valid:
+
+我们的工厂没有必要返回指针；下面的代码完全正确：
 
 ```go
 func NewSaiyan(name string, power int) Saiyan {
@@ -199,8 +206,11 @@ func NewSaiyan(name string, power int) Saiyan {
 ```
 
 ## New
+## 创建
 
 Despite the lack of constructors, Go does have a built-in `new` function which is used to allocate the memory required by a type. The result of `new(X)` is the same as `&X{}`:
+
+尽管没有构造器，但是Go有内置的`new`函数可以用来分配一下指定类弄的内存。`new(X)`和`&X{}`的效果是一样的：
 
 ```go
 goku := new(Saiyan)
@@ -209,6 +219,8 @@ goku := &Saiyan{}
 ```
 
 Which you use is up to you, but you'll find that most people prefer the latter whenever they have fields to initialize, since it tends to be easier to read:
+
+使有哪种方式看你自己的喜好，但是你会发现当字段需要初始化时，大多数人喜欢使用后一种方式，因为这样更易读：
 
 ```go
 goku := new(Saiyan)
@@ -224,6 +236,8 @@ goku := &Saiyan {
 ```
 
 Whichever approach you choose, if you follow the factory pattern above, you can shield the rest of your code from knowing and worrying about any of the allocation details.
+
+无论你使用哪种方式，如果你使用上面的工厂模式，接下来的代码中你可以不要了解和担心任何分配的细节。
 
 ## Fields of a Structure
 
