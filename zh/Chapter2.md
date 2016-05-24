@@ -146,8 +146,10 @@ All this isn't to say that you'll always want a pointer. At the end of this chap
 所有这些不是说你一直要用指针。本章末尾，当我们学到更多结构体的内容后，我们会重新审视指针和值类型的问题。
 
 ## Functions on Structures
+## 结构体上的函数（结构体的方法）
 
 We can associate a method with a structure:
+我们可以为结构体关联一个方法：
 
 ```go
 type Saiyan struct {
@@ -161,6 +163,8 @@ func (s *Saiyan) Super() {
 ```
 
 In the above code, we say that the type `*Saiyan` is the **receiver** of the `Super` method. We call `Super` like so:
+
+上面的代码，我们说`*Saiyan`是`Super`方法的 **接收器** 。我们能过这样的方式调用`Super`方法：
 
 ```go
 goku := &Saiyan{"Goku", 9001}
