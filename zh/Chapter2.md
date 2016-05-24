@@ -21,14 +21,17 @@ type Saiyan struct {
 ```
 
 We'll soon see how to add a method to this structure, much like you'd have methods as part of a class. Before we do that, we have to dive back into declarations.
-很快我们就会看到怎么往这个结构体中添加方法，就像你要类中添加方法一样。在那之前，我们细看下结构体的声明.
+很快我们就会看到怎么往这个结构体中添加方法，就像你要类中添加方法一样。在那之前，我们先细看下结构体的声明.
 
 ## Declarations and Initializations
 ## 声明和初始化
 
 When we first looked at variables and declarations, we looked only at built-in types, like integers and strings. Now that we're talking about structures, we need to expand that conversation to include pointers.
 
+我们最初学习变量和声明的时候，我们只用到内建类型，比如整形和字符串。现在我们讲的是结构体，我们要深入这个话题，包括指针。
+
 The simplest way to create a value of our structure is:
+创建一个结构体的值最简单的方式是：
 
 ```go
 goku := Saiyan{
@@ -39,7 +42,10 @@ goku := Saiyan{
 
 *Note:* The trailing `,` in the above structure is required. Without it, the compiler will give an error. You'll appreciate the required consistency, especially if you've used a language or format that enforces the opposite.
 
+*注意：*结构体中最后一个`,`是必需的。没有的话，编译器会报错。你会喜欢这种一致性要求，特别是如果你使用了强制性相反的语言或格式
+
 We don't have to set all or even any of the fields. Both of these are valid:
+我们可以不给所有或者任何一个字段赋值。下面两种方式都是正确的：
 
 ```go
 goku := Saiyan{}
@@ -52,7 +58,11 @@ goku.Power = 9000
 
 Just like unassigned variables have a zero value, so do fields.
 
+和没有赋值的变量一样，没有赋值的字段默认为0值。
+
 Furthermore, you can skip the field name and rely on the order of the field declarations (though for the sake of clarity, you should only do this for structures with few fields):
+
+再者，你也可以省略字段的名字，按字段的顺序进行声明（尽管为了简洁起见，你尽量在结构体只有少量字段时才使用这种方式）：
 
 ```go
 goku := Saiyan{"Goku", 9000}
@@ -60,9 +70,16 @@ goku := Saiyan{"Goku", 9000}
 
 What all of the above examples do is declare a variable `goku` and assign a value to it.
 
+上面所有的例子所做的事件就是声明一个变量`goku`并给它赋一个值。
+
 Many times though, we don't want a variable that is directly associated with our value but rather a variable that has a pointer to our value. A pointer is a memory address; it's the location of where to find the actual value. It's a level of indirection. Loosely, it's the difference between being at a house and having directions to the house.
 
+很多时候，我们不想变量直接相关的值，而是一个指向指针的变量。指针是内存地址，它可以定位实际的值有哪里。这是一种间接层。简单点说，这好比是在房子里还是有房子地址的区别。
+
+
 Why do we want a pointer to the value, rather than the actual value? It comes down to the way Go passes arguments to a function: as copies. Knowing this, what does the following print?
+
+为什么我们确实需要指针，而不是实际的值？这是因为Go在函数中参数的传递方式是：值。了解了这个，下面的程序会打出来什么？
 
 ```go
 func main() {
@@ -78,6 +95,8 @@ func Super(s Saiyan) {
 
 The answer is 9000, not 19000. Why? Because `Super` made changes to a copy of our original `goku` value and thus, changes made in `Super` weren't reflected in the caller. To make this work as you probably expect, we need to pass a pointer to our value:
 
+答案是9000，而示是19000。为什么呢？因为`Super`改变的是`goku`的一个拷贝的值，`Super`中的改变不会在调用者中显示出来。要如你期望的方式运行，我们需要传入一个指针：
+
 ```go
 func main() {
   goku := &Saiyan{"Goku", 9000}
@@ -92,9 +111,15 @@ func Super(s *Saiyan) {
 
 We made two changes. The first is the use of the `&` operator to get the address of our value (it's called the *address of* operator). Next, we changed the type of parameter `Super` expects. It used to expect a value of type `Saiyan` but now expects an address of type `*Saiyan`, where `*X` means *pointer to value of type X*. There's obviously some relation between the types `Saiyan` and `*Saiyan`, but they are two distinct types.
 
+我们做了两处修改。第一处是使用了`&`操作符来获取值的地址（它被称为 *取址*操作符）。接下来，我们修改`Super`期望的参数类型。原来它期望的是`Saiyan`值类型，而现在期望的是`*Saiyan`的地址类型，此处`*X`是指 *指向X类型的指针*。`Saiyan`和 `*Saiyan`的类型有一些明显的关联，但是它们两是不同的类型。
+
 Note that we're still passing a copy of `goku's` value to `Super` it just so happens that `goku's` value has become an address. That copy is the same address as the original, which is what that indirection buys us. Think of it as copying the directions to a restaurant. What you have is a copy, but it still points to the same restaurant as the original.
 
+需要指出的是，我们现在传递给`Super`参数的仍然是`goku`的值拷贝。只是现在`goku`的值变成了一个地址。这个地址拷贝和源地址相同。可以认为它类似一个指向餐厅方向的拷贝，这就间接服务于我们。虽然是一个拷贝，但是和源地址一样，也指向同一个餐厅。
+
 We can prove that it's a copy by trying to change where it points to (not something you'd likely want to actually do):
+
+我们可以通过改变它的指向来证明这是个拷贝（虽然不是你想要的）：
 
 ```go
 func main() {
@@ -110,9 +135,15 @@ func Super(s *Saiyan) {
 
 The above, once again, prints 9000. This is how many languages behave, including Ruby, Python, Java and C#. Go, and to some degree C#, simply make the fact visible.
 
+上例，依然，打印9000。这和很多语言的行为是一样的，包括Ruby，Python，Java和C#。Go和C#一定程度是要样的，让这个更显而易见。
+
 It should also be obvious that copying a pointer is going to be cheaper than copying a complex structure. On a 64-bit machine, a pointer is 64 bits large. If we have a structure with many fields, creating copies can be expensive. The real value of pointers though is that they let you share values. Do we want `Super` to alter a copy of `goku` or alter the shared `goku` value itself?
 
+很明显拷贝一个指针比拷贝一个复杂的结构体开销小多了。在64位的机器上，一个指针是64位的大小。如果我们有一个有很多字段的结构体，创建一份拷贝开销是比较大的。指针的真正价值是通过它可以共享值。我们想通过`Super`去改变`goku`的拷贝或者改变共享的`goku`值本身？
+
 All this isn't to say that you'll always want a pointer. At the end of this chapter, after we've seen a bit more of what we can do with structures, we'll re-examine the pointer-versus-value question.
+
+所有这些不是说你一直要用指针。本章末尾，当我们学到更多结构体的内容后，我们会重新审视指针和值类型的问题。
 
 ## Functions on Structures
 
