@@ -240,10 +240,15 @@ Whichever approach you choose, if you follow the factory pattern above, you can 
 无论你使用哪种方式，如果你使用上面的工厂模式，接下来的代码中你可以不要了解和担心任何分配的细节。
 
 ## Fields of a Structure
+## 结构体字段
 
 In the example that we've seen so far, `Saiyan` has two fields `Name` and `Power` of types `string` and `int`, respectively. Fields can be of any type -- including other structures and types that we haven't explored yet such as arrays, maps, interfaces and functions.
 
+目前为止我们看到的例子中，`Saiyan`有两个字段，一个`字符串`类型的`Name`和一个`整型`的`Power`。字段可以是任何类型————包括其他的结构体和暂时我们没有讲到的类型，例如数组、字典、接口和函数。
+
 For example, we could expand our definition of `Saiyan`:
+
+例如，我们可以这样扩展`Saiyan`的定义：
 
 ```go
 type Saiyan struct {
@@ -254,6 +259,8 @@ type Saiyan struct {
 ```
 
 which we'd initialize via:
+
+我们可以通过下面的方式初始化：
 
 ```go
 gohan := &Saiyan{
@@ -268,8 +275,11 @@ gohan := &Saiyan{
 ```
 
 ## Composition
+## 组合
 
 Go supports composition, which is the act of including one structure into another. In some languages, this is called a trait or a mixin. Languages that don't have an explicit composition mechanism can always do it the long way. In Java:
+
+Go支持组合，就是将一个结构体包含在另一个之中。在一些语言中，这被叫特性或混入。没有明确的组合机制的语言，要实现这个特性就比较繁杂。在Java中：
 
 ```java
 public class Person {
@@ -294,6 +304,8 @@ public class Saiyan {
 
 This can get pretty tedious. Every method of `Person` needs to be duplicated in `Saiyan`. Go avoids this tediousness:
 
+这样会相当的冗长。每个`Person`的方法都需要在`Saiyan`中复制一遍。Go可以避免这种冗长：
+
 ```go
 type Person struct {
   Name string
@@ -316,7 +328,12 @@ goku := &Saiyan{
 goku.Introduce()
 ```
 
-The `Saiyan` structure has a field of type `*Person`. Because we didn't give it an explicit field name, we can implicitly access the fields and functions of the composed type. However, the Go compiler *did* give it a field name, consider the perfectly valid:
+The `Saiyan` structure has a field of type `*Person`. Because we didn't give it an explicit field name, 
+we can implicitly access the fields and functions of the composed type. 
+However, the Go compiler *did* give it a field name, consider the perfectly valid:
+
+`Saiyan`结构体中有一个`*Person`类型的字段。因为我们没有给他一个显示的字段名，我们可以隐示的访问组合类型的所有字段和函数。
+但出于完全有效的考虑，Go编辑器*确实*有给它分配一个字段名。
 
 ```go
 goku := &Saiyan{
@@ -328,9 +345,14 @@ fmt.Println(goku.Person.Name)
 
 Both of the above will print "Goku".
 
-Is composition better than inheritance? Many people think that it's a more robust way to share code. When using inheritance, your class is tightly coupled to your superclass and you end up focusing on hierarchy rather than behavior.
+上面的两个输出都是"Goku"。
+
+Is composition better than inheritance? Many people think that it's a more robust way to share code.
+When using inheritance, your class is tightly coupled to your superclass and you end up focusing on hierarchy rather than behavior.
+组合是不优于继承？很多人认为这是一种更健壮的共享代码的方式。当使用继承时，你的类和超类捆绑在一起，你最终关注继承而不是行为。
 
 ### Overloading
+### 重载
 
 While overloading isn't specific to structures, it's worth addressing. Simply, Go doesn't support overloading. For this reason, you'll see (and write) a lot of functions that look like `Load`, `LoadById`, `LoadByName` and so on.
 
