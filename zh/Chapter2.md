@@ -354,9 +354,14 @@ When using inheritance, your class is tightly coupled to your superclass and you
 ### Overloading
 ### 重载
 
-While overloading isn't specific to structures, it's worth addressing. Simply, Go doesn't support overloading. For this reason, you'll see (and write) a lot of functions that look like `Load`, `LoadById`, `LoadByName` and so on.
+While overloading isn't specific to structures, it's worth addressing. Simply, Go doesn't support overloading. 
+For this reason, you'll see (and write) a lot of functions that look like `Load`, `LoadById`, `LoadByName` and so on.
 
-However, because implicit composition is really just a compiler trick, we can "overwrite" the functions of a composed type. For example, our `Saiyan` structure can have its own `Introduce` function:
+值得指出的是，结构体没有重载。简而言之，Go不支持重载。因为这个原因，你会看到（和写）很多像 `Load`, `LoadById`, `LoadByName`这样的函数。
+
+However, because implicit composition is really just a compiler trick, we can "overwrite" the functions of a composed type. 
+For example, our `Saiyan` structure can have its own `Introduce` function:
+但是，因为非显示的组合是一个编辑器技巧，我们可以“重写”组合类型的函数。比如， 我们的`Saiyan`结构体可以有自己的`Introduce`方法：
 
 ```go
 func (s *Saiyan) Introduce() {
@@ -366,9 +371,15 @@ func (s *Saiyan) Introduce() {
 
 The composed version is always available via `s.Person.Introduce()`.
 
-## Pointers versus Values
+组合版本中使用`s.Person.Introduce()`也是一样的。
 
-As you write Go code, it's natural to ask yourself *should this be a value, or a pointer to a value?* There are two pieces of good news. First, the answer is the same regardless of which of the following we're talking about:
+## Pointers versus Values
+## 指针和值
+
+As you write Go code, it's natural to ask yourself *should this be a value, or a pointer to a value?* There are two pieces of good news. 
+First, the answer is the same regardless of which of the following we're talking about:
+
+当你写Go代码的时候，你很自然的就会问你自己*这应该是要用值还是要用指针?*下面是两个好消息。首先，下面讨论的这些话题是没有什么差别的：
 
 * A local variable assignment
 * Field in a structure
@@ -376,11 +387,24 @@ As you write Go code, it's natural to ask yourself *should this be a value, or a
 * Parameters to a function
 * The receiver of a method
 
+* 局部变量赋值
+* 结构体中的字段
+* 函数的返回值
+* 函数的参数
+* 方法的接收者
+
 Secondly, if you aren't sure, use a pointer.
+其次，如果你不确定，就用指针好了。
 
-As we already saw, passing values is a great way to make data immutable (changes that a function makes to it won't be reflected in the calling code). Sometimes, this is the behavior that you'll want but more often, it won't be.
+As we already saw, passing values is a great way to make data immutable 
+(changes that a function makes to it won't be reflected in the calling code). 
+Sometimes, this is the behavior that you'll want but more often, it won't be.
 
-Even if you don't intend to change the data, consider the cost of creating a copy of large structures. Conversely, you might have small structures, say:
+就如我们看到的那样，传值是一个让值不可变的好方法（函数内的改变不会影响调用代码中的值）。有些时候，我们却时希望如此，可常常不是这样的。
+Even if you don't intend to change the data, consider the cost of creating a copy of large structures. 
+Conversely, you might have small structures, say:
+
+就算你不想改变值，想一下创建一个大结构体拷贝的开销。相反地，你可能有一个小结构体，例如：
 
 ```go
 type Point struct {
@@ -391,9 +415,18 @@ type Point struct {
 
 In such cases, the cost of copying the structure is probably offset by being able to access `X` and `Y` directly, without any indirection.
 
+在这种情况下，拷贝结构体的开销可以通过偏移量来直接访问`X`和`Y`，而不是间接访问。
 Again, these are all pretty subtle cases. Unless you're iterating over thousands or possibly tens of thousands of such points, you wouldn't notice a difference.
 
+再次指出，这些只是非常微妙的情况。除非你要访问成千上百个这样的点，否则你不会察觉有任何的不同。
+
 ## Before You Continue
+## 继续之前
 
-From a practical point of view, this chapter introduced structures, how to make an instance of a structure a receiver of a function, and added pointers to our existing knowledge of Go's type system. The following chapters will build on what we know about structures as well as the inner workings that we've explored.
+From a practical point of view, this chapter introduced structures, 
+how to make an instance of a structure a receiver of a function, 
+and added pointers to our existing knowledge of Go's type system. 
+The following chapters will build on what we know about structures as well as the inner workings that we've explored.
 
+本章从实践的角度来看，介绍了结构体，以及如何创建方法接收器的结构体实例，并在我们现有的Go知识体系中引入了指针。
+下面的章节将基于我们所知道的结构体知识来探讨其内部运行机制。
