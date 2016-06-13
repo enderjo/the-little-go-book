@@ -423,10 +423,7 @@ Again, these are all pretty subtle cases. Unless you're iterating over thousands
 ## Before You Continue
 ## 继续之前
 
-From a practical point of view, this chapter introduced structures, 
-how to make an instance of a structure a receiver of a function, 
-and added pointers to our existing knowledge of Go's type system. 
-The following chapters will build on what we know about structures as well as the inner workings that we've explored.
+From a practical point of view, this chapter introduced structures, how to make an instance of a structure a receiver of a function, and added pointers to our existing knowledge of Go's type system. The following chapters will build on what we know about structures as well as the inner workings that we've explored.
 
 本章从实践的角度来看，介绍了结构体，以及如何创建方法接收器的结构体实例，并在我们现有的Go知识体系中引入了指针。
 下面的章节将基于我们所知道的结构体知识来探讨其内部运行机制。

@@ -1,10 +1,16 @@
 # Chapter 3 - Maps, Arrays and Slices
+# 第三章 - 字典 ，数组和切片
 
 So far we've seen a number of simple types and structures. It's now time to look at arrays, slices and maps.
 
+目前为止我们看了些简单类型和结构体。现在是时候来看看数组，切片和字典了。
+
 ## Arrays
+## 数组
 
 If you come from Python, Ruby, Perl, JavaScript or PHP (and more), you're probably used to programming with *dynamic arrays*. These are arrays that resize themselves as data is added to them. In Go, like many other languages, arrays are fixed. Declaring an array requires that we specify the size, and once the size is specified, it cannot grow:
+
+如果你从Python、Ruby、Perl、JavaScript或者PHP（还有更多），你可能使用过*动态数组*。这些数组当数据添加进来可以调整大小。在Go中，和其他语言一样，数组是固定大小的。申请一个数组需要我们指定它的大小。申明一个数组时需要指定大小，一旦大小指定了，就不能增长了：
 
 ```go
 var scores [10]int
@@ -13,13 +19,19 @@ scores[0] = 339
 
 The above array can hold up to 10 scores using indexes `scores[0]` through `scores[9]`. Attempts to access an out of range index in the array will result in a compiler or runtime error.
 
+上面的这个数组从`scores[0]`到`scores[9]`可以容纳10个分数。尝试访问超出数组索引的会报编译或者运行时错误。
+
 We can initialize the array with values:
+
+我们可以带值初始化数组：
 
 ```go
 scores := [4]int{9001, 9333, 212, 33}
 ```
 
 We can use `len` to get the length of the array. `range` can be used to iterate over it:
+
+我们可能通过`len`来获取数组的长度。可以用`range`来迭代数组。
 
 ```go
 for index, value := range scores {
@@ -29,9 +41,14 @@ for index, value := range scores {
 
 Arrays are efficient but rigid. We often don't know the number of elements we'll be dealing with upfront. For this, we turn to slices.
 
+数组高效但不灵活。我们常常不能预先知道有多少元素需要处理。因此，我们使用切片。
+
 ## Slices
+## 切片
 
 In Go, you rarely, if ever, use arrays directly. Instead, you use slices. A slice is a lightweight structure that wraps and represents a portion of an array. There are a few ways to create a slice, and we'll go over when to use which later on. The first is a slight variation on how we created an array:
+
+在Go中，你很少，或者根本不，直接使用数组。反而，你使用切片。切片是对数组一个轻量型封装。有几种方式来创建一个切片，我们会全部过一遍。第一种方式和创建数组有一点小小的变化。
 
 ```go
 scores := []int{1,4,293,4,9}
@@ -39,11 +56,15 @@ scores := []int{1,4,293,4,9}
 
 Unlike the array declaration, our slice isn't declared with a length within the square brackets. To understand how the two are different, let's see another way to create a slice, using `make`:
 
+和申请数组不同，我们的切片没有在中括号内指定长度。要理解这两者的不同，我们用另一种方式创建切片，使用`make`：
+
 ```go
 scores := make([]int, 10)
 ```
 
 We use `make` instead of `new` because there's more to creating a slice than just allocating the memory (which is what `new` does). Specifically, we have to allocate the memory for the underlying array and also initialize the slice.  In the above, we initialize a slice with a length of 10 and a capacity of 10. The length is the size of the slice, the capacity is the size of the underlying array. Using `make` we can specify the two separately:
+
+我们使用`make`来替代`new`因为创建一个切片比只是分配内存（`new`做的事情）要复杂一些。特别的，我们需要分配底层数组和初始化切片。上面的例子，我们初始化了一个长度和容量为10的切片。长度是切片的大小，容量时底层数组的大小。使用`make`时可以分开提定这两个值：
 
 ```go
 scores := make([]int, 0, 10)
