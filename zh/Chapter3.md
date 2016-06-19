@@ -72,7 +72,11 @@ scores := make([]int, 0, 10)
 
 This creates a slice with a length of 0 but with a capacity of 10. (If you're paying attention, you'll note that `make` and `len` *are* overloaded. Go is a language that, to the frustration of some, makes use of features which aren't exposed for developers to use.)
 
+这创建了一个长度为0但容量为10的切片。（如果你留心，你会注意到`make`和`len`*是*重载的。Go有的时候令人沮丧，一些在使用的功能没有暴露给开发者使用。）
+
 To better understand the interplay between length and capacity, let's look at some examples:
+
+为了更好的理解长度和容量之间的相互作用，让我们来看一个例子：
 
 ```go
 func main() {
@@ -84,6 +88,8 @@ func main() {
 
 Our first example crashes. Why? Because our slice has a length of 0. Yes, the underlying array has 10 elements, but we need to explicitly expand our slice in order to access those elements. One way to expand a slice is via `append`:
 
+我们的第一个程序崩溃了。为什么呢？因我们的切片的长度为0。是的，底层数组有10个元素，但是我们需要显示的扩展切片来访问这些元素。一种扩展方式是使用`append`：
+
 ```go
 func main() {
   scores := make([]int, 0, 10)
@@ -93,6 +99,9 @@ func main() {
 ```
 
 But that changes the intent of our original code. Appending to a slice of length 0 will set the first element. For whatever reason, our crashing code wanted to set the element at index 5. To do this, we can re-slice our slice:
+
+上面的修改改变了我们的原始代码的意图。扩展一个长度为0的切片会设置第一个元素。无论什么原因，我们崩溃的代码想要的是修改索引为5的元素。 我们可以重切片一次我们的切片：
+
 
 ```go
 func main() {
@@ -105,7 +114,11 @@ func main() {
 
 How large can we resize a slice? Up to its capacity which, in this case, is 10. You might be thinking *this doesn't actually solve the fixed-length issue of arrays.* It turns out that `append` is pretty special. If the underlying array is full, it will create a new larger array and copy the values over (this is exactly how dynamic arrays work in PHP, Python, Ruby, JavaScript, ...). This is why, in the example above that used `append`, we had to re-assign the value returned by `append` to our `scores` variable: `append` might have created a new value if the original had no more space.
 
+我们调整切片最大是多少？这是由它的容量决定的，在本例中，是10。你可能会想*这没有从本质上解决数能固定和长度的问题*。事实上，`append`是非常特殊的。当底层数组满了，它会创建一个新的数组，并把数值拷贝过来（PHP, Python, Ruby, JavaScript等也是这么做的）。这也就是为什么，我们上面的代码，使用了`append`之后，我们需要把`append`的返回值重新赋值给`scores`的原因：`append`会产生一个新的值如果原始的空间不足。
+
 If I told you that Go grew arrays with a 2x algorithm, can you guess what the following will output?
+
+如果我告诉你说Go是近两倍的算法来增长数组，那下面的代码会输出什么？
 
 ```go
 func main() {
@@ -128,7 +141,11 @@ func main() {
 
 The initial capacity of `scores` is 5. In order to hold 20 values, it'll have to be expanded 3 times with a capacity of 10, 20 and finally 40.
 
+`scores`最初的容量是5。为了容纳20个值，它将会扩展3次，分别是10，20和40。
+
 As a final example, consider:
+
+来思考下最后一个例子：
 
 ```go
 func main() {
@@ -140,7 +157,11 @@ func main() {
 
 Here, the output is going to be `[0, 0, 0, 0, 0, 9332]`. Maybe you thought it would be `[9332, 0, 0, 0, 0]`? To a human, that might seem logical. To a compiler, you're telling it to append a value to a slice that already holds 5 values.
 
+这里，输出是`[0, 0, 0, 0, 0, 9332]`。可能你会想它应该是`[9332, 0, 0, 0, 0]`？对于人来说这可能符合逻辑。对于编译器来说，你告诉它的就是要扩展一个已经有5个值的切片。
+
 Ultimately, there are four common ways to initialize a slice:
+
+最后，有四种常用的方式来初始化一个切片：
 
 ```go
 names := []string{"leto", "jessica", "paul"}
