@@ -172,7 +172,11 @@ scores := make([]int, 0, 20)
 
 When do you use which? The first one shouldn't need much of an explanation. You use this when you know the values that you want in the array ahead of time.
 
+何时用哪一种呢？第一种不需要过多的解释。当你知道所有的值并且你要的是数组头的时候使用。
+
 The second one is useful when you'll be writing into specific indexes of a slice. For example:
+
+当你需要写入切片的指定索引时，第二种就很有用。比如：
 
 ```go
 func extractPowers(saiyans []*Saiyans) []int {
@@ -186,9 +190,15 @@ func extractPowers(saiyans []*Saiyans) []int {
 
 The third version is a nil slice and is used in conjunction with `append`, when the number of elements is unknown.
 
+当知道有多少元素的时候，就可使用第三种是一个空切片和`append`配合使用。
+
 The last version lets us specify an initial capacity; useful if we have a general idea of how many elements we'll need.
 
+当我们对需要多少元素有多少了解时使用最后一种方式来指定初始容量。
+
 Even when you know the size, `append` can be used. It's largely a matter of preference:
+
+即使你知道了大小，`append`依然可以使用。这很大程度上是一个偏好问题：
 
 ```go
 func extractPowers(saiyans []*Saiyans) []int {
@@ -201,6 +211,8 @@ func extractPowers(saiyans []*Saiyans) []int {
 ```
 
 Slices as wrappers to arrays is a powerful concept. Many languages have the concept of slicing an array. Both JavaScript and Ruby arrays have a `slice` method. You can also get a slice in Ruby by using `[START..END]` or in Python via `[START:END]`. However, in these languages, a slice is actually a new array with the values of the original copied over. If we take Ruby, what's the output of the following?
+
+切片做为数组的封装是一个很有用的概念。许多语言有数组切片的概念。JavaScript和Ruby的数组都有`slice`方法。你可以对通过`[START..END]`或者在Python中用`[START:END]`的方式取得一个切片。但是，在这些语言中切片是对原数组的拷贝。如果我们使用Ruby，下面的代码会输出什么？
 
 ```go
 scores = [1,2,3,4,5]
