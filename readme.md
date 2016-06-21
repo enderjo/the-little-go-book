@@ -72,3 +72,7 @@ Run `make en/go.mobi`.
 
 ## Title Image ##
 A PSD of the title image is included. The font used is [Comfortaa](http://www.dafont.com/comfortaa.font).
+
+## TODO
+1.需要统一文本中的人称，统一使用第一人称，我们。
+2.需要统一术语的翻译，如Map->映射，

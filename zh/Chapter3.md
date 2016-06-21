@@ -310,10 +310,15 @@ Take some time and play with the above code. Try variations. See what happens if
 花一些时间来执行上面的代码。多试几次。看看会发生什么，如果将代码改为`copy(worst[2:4], scores[:5])`，或者要拷贝比`5`更多或少的值到`worst`？
 
 ## Maps
+## 映射
 
 Maps in Go are what other languages call hashtables or dictionaries. They work as you expect: you define a key and value, and can get, set and delete values from it.
 
+Go中的映射在其他语言中叫哈希表或者字典。它们都如你想的一样：你定义一个键和值，然后你可以通过映射来删改查这些值。
+
 Maps, like slices, are created with the `make` function. Let's look at an example:
+
+映射，和切片一样，是通过`make`函数来创建的。让我们来看一个例子：
 
 ```go
 func main() {
@@ -329,6 +334,8 @@ func main() {
 
 To get the number of keys, we use `len`. To remove a value based on its key, we use `delete`:
 
+我们使用`len`来获取有多少键。要通过键来删除一个值，我们用`delete`：
+
 ```go
 // returns 1
 total := len(lookup)
@@ -339,13 +346,19 @@ delete(lookup, "goku")
 
 Maps grow dynamically. However, we can supply a second argument to `make` to set an initial size:
 
+映射是动态增长的。但是，我们可以通过`make`的第二个参数来设置它的初始大小：
+
 ```go
 lookup := make(map[string]int, 100)
 ```
 
 If you have some idea of how many keys your map will have, defining an initial size can help with performance.
 
+如果知道有多少值，指定初始大小可以有更好的性能表现。
+
 When you need a map as a field of a structure, you define it as:
+
+如果想要把映射做为结构体的一个字段，我们这样定义：
 
 ```go
 type Saiyan struct {
@@ -355,6 +368,8 @@ type Saiyan struct {
 ```
 
 One way to initialize the above is via:
+
+初始化的一种方式：
 
 ```go
 goku := &Saiyan{
@@ -366,6 +381,8 @@ goku.Friends["krillin"] = ... //todo load or create Krillin
 
 There's yet another way to declare and initialize values in Go. Like `make`, this approach is specific to maps and arrays. We can declare as a composite literal:
 
+在Go中有另一种申明和初始化的方式。和`make`一样，这对映射和数组都是有效的。我们可以像组合文字一样申明：
+
 ```go
 lookup := map[string]int{
   "goku": 9001,
@@ -375,6 +392,8 @@ lookup := map[string]int{
 
 We can iterate over a map using a `for` loop combined with the `range` keyword:
 
+我们可以通过`for`和`range`关键字来迭代映射：
+
 ```go
 for key, value := range lookup {
   ...
@@ -382,6 +401,8 @@ for key, value := range lookup {
 ```
 
 Iteration over maps isn't ordered. Each iteration over a lookup will return the key value pair in a random order.
+
+映射的迭代器是无序的。每个迭代器随机查找键值对。
 
 ## Pointers versus Values
 
