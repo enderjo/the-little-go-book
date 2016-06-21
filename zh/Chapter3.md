@@ -223,6 +223,8 @@ puts scores
 
 The answer is `[1, 2, 3, 4, 5]`. That's because `slice` is a completely new array with copies of values. Now, consider the Go equivalent:
 
+答案是`[1, 2, 3, 4, 5]`。那是因为`slice`是一个复制了所有值的全新数组。现在，来看下Go相同的代码：
+
 ```go
 scores := []int{1,2,3,4,5}
 slice := scores[2:4]
@@ -232,7 +234,11 @@ fmt.Println(scores)
 
 The output is `[1, 2, 999, 4, 5]`.
 
+输出是`[1, 2, 999, 4, 5]`。
+
 This changes how you code. For example, a number of functions take a position parameter. In JavaScript, if we want to find the first space in a string (yes, slices work on strings too!) after the first five characters, we'd write:
+
+这改变了你的编码方式。比如，一些函数需要一个位置参数。在JavaScript中，如果我们需要找到字符串中第五个字符之后的第一个空格（是的，切片对字符串也是有效的！）， 我们这样写：
 
 ```go
 haystack = "the spice must flow";
@@ -241,11 +247,15 @@ console.log(haystack.indexOf(" ", 5));
 
 In Go, we leverage slices:
 
+在Go中，我们使用切片：
+
 ```go
 strings.Index(haystack[5:], " ")
 ```
 
 We can see from the above example, that `[X:]` is shorthand for *from X to the end* while `[:X]` is shorthand for *from the start to X*. Unlike other languages, Go doesn't support negative values. If we want all of the values of a slice except the last, we do:
+
+上面的例子，我们可以看到，`[X:]`是*从X到结束*的简写，就如`[:X]`是*从开始到X*的简写一样。和其他语言不同的是，Go不支持反向取值（这边感觉不对）。如果我们需要切片除了最后一个值以外的所有值，我们这样来写：
 
 ```go
 scores := []int{1, 2, 3, 4, 5}
@@ -253,6 +263,8 @@ scores = scores[:len(scores)-1]
 ```
 
 The above is the start of an efficient way to remove a value from an unsorted slice:
+
+以上是一种快速删除未排序的切片中的某个值的方法的开头：
 
 ```go
 func main() {
@@ -270,6 +282,8 @@ func removeAtIndex(source []int, index int) []int {
 ```
 
 Finally, now that we know about slices, we can look at another commonly used built-in function: `copy`. `copy` is one of those functions that highlights how slices change the way we code. Normally, a method that copies values from one array to another has 5 parameters: `source`, `sourceStart`, `count`, `destination` and `destinationStart`. With slices, we only need two:
+
+最后，既然我们是学习了切片，我们来看另一个常用的内置函数： `copy`。 `copy`是能突出切片是如何改变我们的编码方式的函数之一。通常，数组间拷贝需要5个参数：`source`, `sourceStart`, `count`, `destination` 和 `destinationStart`。使用切片只要两个：
 
 ```go
 import (
@@ -292,6 +306,8 @@ func main() {
 ```
 
 Take some time and play with the above code. Try variations. See what happens if you change copy to something like `copy(worst[2:4], scores[:5])`, or what if you try to copy more or less than `5` values into `worst`?
+
+花一些时间来执行上面的代码。多试几次。看看会发生什么，如果将代码改为`copy(worst[2:4], scores[:5])`，或者要拷贝比`5`更多或少的值到`worst`？
 
 ## Maps
 
