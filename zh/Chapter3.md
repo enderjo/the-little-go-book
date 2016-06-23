@@ -405,8 +405,11 @@ Iteration over maps isn't ordered. Each iteration over a lookup will return the 
 映射的迭代器是无序的。每个迭代器随机查找键值对。
 
 ## Pointers versus Values
+## 指针和值
 
 We finished Chapter 2 by looking at whether you should assign and pass pointers or values. We'll now have this same conversation with respect to array and map values. Which of these should you use?
+
+通过了解什么时候传值或指针我们结束了第二章。在数组和映射的值方面我们将碰到相同的问题。我们应该用哪一种？
 
 ```go
 a := make([]Saiyan, 10)
@@ -416,10 +419,19 @@ b := make([]*Saiyan, 10)
 
 Many developers think that passing `b` to, or returning it from, a function is going to be more efficient. However, what's being passed/returned is a copy of the slice, which itself is a reference. So with respect to passing/returning the slice itself, there's no difference.
 
+许多开发人员会想对于一个函数来说是传`b`还是将它做为返回值更高效。然而，这里传递或者返回的都是一个切片的拷贝，它本身就是一个引用。所以就传递或者返回这个切片而言，没有什么区别。
+
 Where you will see a difference is when you modify the values of a slice or map. At this point, the same logic that we saw in Chapter 2 applies. So the decision on whether to define an array of pointers versus an array of values comes down to how you use the individual values, not how you use the array or map itself.
 
+当你改变一个切片或者映射的值时，你会看见不同。在这点上，同样的逻辑，我们在第二章看到已经适用。所以是否定义一个数组指针还是一个数组值主要归结于如何使用单个值，而不是你如何使用数组或者映射本身。
+
 ## Before You Continue
+## 继续之前
 
 Arrays and maps in Go work much like they do in other languages. If you're used to dynamic arrays, there might be a small adjustment, but `append` should solve most of your discomfort. If we peek beyond the superficial syntax of arrays, we find slices. Slices are powerful and they have a surprisingly large impact on the clarity of your code.
 
+在Go中数组和映射的工作方式与其他语言非常像。如果你用过动态数组，可能有会有一些需要调整，但是通过`append`可以解决所有的不适。如果我们抛开数组表面的语法，我们就会发现切片。切片是相当强大的，使用切片对你代码的整洁性有着非常巨大的影响。
+
 There are edge cases that we haven't covered, but you're not likely to run into them. And, if you do, hopefully the foundation we've built here will let you understand what's going on.
+
+这里有一些边界例子我们没有涉及到，但是你不太可能遇见这些例子。另外，如果你遇到了，希望我们已经打下的基础能让你理解这是怎么回事。
