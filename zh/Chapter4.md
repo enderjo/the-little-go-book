@@ -1,14 +1,24 @@
 # Chapter 4 - Code Organization and Interfaces
+# 第三章 - 代码组织和接口
 
 It's now time to look at how to organize our code.
 
+现在是时候来看看我们是怎么组织代码了。
+
 ## Packages
+## 包
 
 To keep more complicated libraries and systems organized, we need to learn about packages. In Go, package names follow the directory structure of your Go workspace. If we were building a shopping system, we'd probably start with a package name "shopping" and put our source files in `$GOPATH/src/shopping/`.
 
+为了组织更复杂的类库和系统，我们需要了解包。在Go中，包名紧跟在工作目录结构之下。如果我们构建一个电商系统，我们可能以"shopping"命名包和把源文件存在`$GOPATH/src/shopping/`下。
+
 We don't want to put everything inside this folder though. For example, maybe we want to isolate some database logic inside its own folder. To achieve this, we create a subfolder at `$GOPATH/src/shopping/db`. The package name of the files within this subfolder is simply `db`, but to access it from another package, including the `shopping` package, we need to import `shopping/db`.
 
+显然我们不想反所有的东西都放在这个目录。例如，我们希望在数据库目录下关联一些数据库的逻辑。要达到这个目的，我们创建了一个子目录`$GOPATH/src/shopping/db`。这个目录下的包名可以是简单的`db`，但是其他包需要访问这个包时，就需要包含`shopping`，我们需要这样导入`shopping/db`。
+
 In other words, when you name a package, via the `package` keyword, you provide a single value, not a complete hierarchy (e.g., "shopping" or "db"). When you import a package, you specify the complete path.
+
+换名话来说，当你命名一个包时，可以通过`package`关键字，你提供一个单一的值，不是完整的层级（比如，"shopping"或者"db"）。当你导入包时，你需要指定完整的路径。
 
 Let's try it. Inside your Go workspace's `src` folder (which we set up in Getting Started of the Introduction), create a new folder called `shopping` and a subfolder within it called `db`.
 
