@@ -272,6 +272,8 @@ To solve this, you can use a third-party dependency management tool. They are st
 
 Interfaces are types that define a contract but not an implementation. Here's an example:
 
+接中是一种定义了协议但没有实现的类型。这是一个例子：
+
 ```go
 type Logger interface {
   Log(message string)
@@ -279,6 +281,8 @@ type Logger interface {
 ```
 
 You might be wondering what purpose this could possibly serve. Interfaces help decouple your code from specific implementations. For example, we might have various types of loggers:
+
+你可能会想知道这么做有什么目的。接口可以帮的的代码从特定的实现中解藕出来。例如,我们可能有多种类型的日志：
 
 ```go
 type SqlLogger struct { ... }
@@ -288,7 +292,11 @@ type FileLogger struct { ... }
 
 Yet by programming against the interface, rather than these concrete implementations, we can easily change (and test) which we use without any impact to our code.
 
+是的，能过接口而不是这些具体的实现来编程，我们可以很容易的在不影响我们的代码的基础上修改（和测试）。
+
 How would you use one? Just like any other type, it could be a structure's field:
+
+你要如何来使用？就像其他类型一样，它可以是一个结构体的字段：
 
 ```go
 type Server struct {
@@ -298,6 +306,8 @@ type Server struct {
 
 or a function parameter (or return value):
 
+或者是一个函数的参数（或者访回值）：
+
 ```go
 func process(logger Logger) {
   logger.Log("hello!")
@@ -305,6 +315,8 @@ func process(logger Logger) {
 ```
 
 In a language like C# or Java, we have to be explicit when a class implements an interface:
+
+在像C#或者Java的语言中，我们必须显示的申请明一个类实现了一个接口：
 
 ```go
 public class ConsoleLogger : Logger {
@@ -316,6 +328,8 @@ public class ConsoleLogger : Logger {
 
 In Go, this happens implicitly. If your structure has a function name `Log` with a `string` parameter and no return value, then it can be used as a `Logger`. This cuts down on the verboseness of using interfaces:
 
+在Go中，这是隐式的。如果的结构体有一个名为`Log`的函数，有一个`string`的参数和没有返回值，那么它就可以当作`Logger`来使用。这减少了使用接口时的繁索：
+
 ```go
 type ConsoleLogger struct {}
 func (l ConsoleLogger) Log(message string) {
@@ -325,15 +339,28 @@ func (l ConsoleLogger) Log(message string) {
 
 It also tends to promote small and focused interfaces. The standard library is full of interfaces. The `io` package has a handful of popular ones such as `io.Reader`, `io.Writer`, and `io.Closer`. If you write a function that expects a parameter that you'll only be calling `Close()` on, you absolutely should accept an `io.Closer` rather than whatever concrete type you're using.
 
+这也会倾向于促进接口的小巧和单一。标准库中到处都是接口。在`io`包中有一些流行的接口，如`io.Reader`, `io.Writer`, 和`io.Closer`。如果你要写一个函数需要一个参数但只调用它的`Close()`方法，你绝对可以使用`io.Closer`接口需不是任何具体的类型。
+
 Interfaces can also participate in composition. And, interfaces themselves can be composed of other interfaces. For example, `io.ReadCloser` is an interface composed of the `io.Reader` interface as well as the `io.Closer` interface.
+
+接口也可以组合。也就是说接口可以有其他接口组成。例如，`io.ReadCloser`就是由接口`io.Reader`和`io.Closer`接口组成。
 
 Finally, interfaces are commonly used to avoid cyclical imports. Since they don't have implementations, they'll have limited dependencies.
 
+最后，接口常用于避免循环导入。由于接口没有实现，他们的依赖关系有限。
+
 ## Before You Continue
+## 继续之前
 
 Ultimately, how you structure your code around Go's workspace is something that you'll only feel comfortable with after you've written a couple of non-trivial projects. What's most important for you to remember is the tight relationship between package names and your directory structure (not just within a project, but within the entire workspace).
 
+最后，当你试着用go写一些简单的项目之后，你会习惯在go语言的工作区中组织代码的方式。最重要是的记住go语言中的包名和你的目录结构有密切关系（不仅仅在一个项目中，在整个工作空间都如此）。
+
 The way Go handles visibility of types is straightforward and effective. It's also consistent. There are a few things we haven't looked at, such as constants and global variables but rest assured, their visibility is determined by the same naming rule.
 
+go语言处理类型的可见性方法是简单有效的。也是一致的。还有一些内容我们没有介绍，例如常量和全局变量，但是不用担心，它们的可见性也是遵循同样的规则。
+
 Finally, if you're new to interfaces, it might take some time before you get a feel for them. However, the first time you see a function that expects something like `io.Reader`, you'll find yourself thanking the author for not demanding more than he or she needed.
+
+最后，如果你不熟悉go语言中的接口，你可能需要花一些时间去感受它们。无论如何，当你首次看见一个函数需要例如`io.Reader`之类的参数时，你会发现你自己感激作者的要求不是太苛刻。
 
