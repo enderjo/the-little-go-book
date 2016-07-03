@@ -1,4 +1,5 @@
 # Chapter 6 - Concurrency
+# 第六章 - 并发
 
 Go is often described as a concurrent-friendly language. The reason for this is that it provides a simple syntax over two powerful mechanisms: goroutines and channels.
 

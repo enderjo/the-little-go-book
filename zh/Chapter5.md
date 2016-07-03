@@ -1,10 +1,16 @@
 # Chapter 5 - Tidbits
+# 第五章 - 花絮
 
 In this chapter, we'll talk about a miscellany of Go's feature which didn't quite fit anywhere else.
 
+在这一章是，我们会来介绍一些Go的特性的杂烩，这些内容不太适合放在其他章节中。
+
 ## Error Handling
+## 错误处理
 
 Go's preferred way to deal with errors is through return values, not exceptions. Consider the `strconv.Atoi` function which takes a string and tries to convert it to an integer:
+
+Go更喜欢用返回值而不是异常的方式来处理错误。例如`strconv.Atoi`函数将一个字符串转换成一个整数：
 
 ```go
 package main
@@ -30,6 +36,8 @@ func main() {
 ```
 
 You can create your own error type; the only requirement is that it fulfills the contract of the built-in `error` interface, which is:
+
+你可以创建你自己的错误类型；唯一的要求就是需要实现内置接口`error`。
 
 ```go
 type error interface {
