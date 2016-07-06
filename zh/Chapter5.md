@@ -37,7 +37,7 @@ func main() {
 
 You can create your own error type; the only requirement is that it fulfills the contract of the built-in `error` interface, which is:
 
-你可以创建你自己的错误类型；唯一的要求就是需要实现内置接口`error`。
+你可以创建你自己的错误类型；唯一的要求就是需要实现内置接口`error`:
 
 ```go
 type error interface {
@@ -46,6 +46,8 @@ type error interface {
 ```
 
 More commonly, we can create our own errors by importing the `errors` package and using it in the `New` function:
+
+更为常见的是，我们可以通过导入`errors`包，并通过它的`New`函数来创建自己的错误：
 
 ```go
 import (
@@ -64,11 +66,15 @@ func process(count int) error {
 
 There's a common pattern in Go's standard library of using error variables. For example, the `io` package has an `EOF` variable which is defined as:
 
+在GO的标准库中，使用错误变量是一个常用的模式。例如， 在`io`包中有一个`EOF`变量是这样定义的：
+
 ```go
 var EOF = errors.New("EOF")
 ```
 
 This is a package variable (it's defined outside of a function) which is publicly accessible (upper-case first letter). Various functions can return this error, say when we're reading from a file or STDIN. If it makes contextual sense, you should use this error, too. As consumers, we can use this singleton:
+
+这是一个公共（大写字母开关）的包变量（它定义有函数之外）。如果我们从文件或者标准输入时失败时，我们可以返回这个错误。为了更容易理解，你也应该用这个错误。作为使用者，我们可以用这个单件：
 
 ```go
 package main
@@ -88,6 +94,8 @@ func main() {
 ```
 
 As a final note, Go does have `panic` and `recover` functions. `panic` is like throwing an exception while `recover` is like `catch`; they are rarely used.
+
+最后要注意的是，Go有`panic`和`recover`函数。`panic`像是抛出异常，而`recover`是捕获异常；它们不常使用。
 
 ## Defer
 
