@@ -98,8 +98,11 @@ As a final note, Go does have `panic` and `recover` functions. `panic` is like t
 最后要注意的是，Go有`panic`和`recover`函数。`panic`像是抛出异常，而`recover`是捕获异常；它们不常使用。
 
 ## Defer
+## Defer
 
 Even though Go has a garbage collector, some resources require that we explicitly release them. For example, we need to `Close()` files after we're done with them. This sort of code is always dangerous. For one thing, as we're writing a function, it's easy to forget to `Close` something that we declared 10 lines up. For another, a function might have multiple return points. Go's solution is the `defer` keyword:
+
+虽然Go有垃圾回收机制，但是有些资源需要显示的释放它们。比如，当我们使用文件完了之后，需要调用`Close()`来关闭它们。这类代码总是很危险。其一，我们写一下函数的时候，如果申请一个资源超过10行，就很容易忘记`Close`。其二，一个函数可能会有多个返回点。Go的解决方案是使用`defer`关键字：
 
 ```go
 package main
@@ -122,19 +125,30 @@ func main() {
 
 If you try to run the above code, you'll probably get an error (the file doesn't exist). The point is to show how `defer` works. Whatever you `defer` will be executed after the method returns, even if it does so violently. This lets you release resources near where it’s initialized and takes care of multiple return points.
 
+如果你尝试运行上面的代码，你可能收到一个错误（文件不存在）。这里展示的是`defer`是如何工作的。无论如何在函数返回时`defer`都会被执行，虽然这样有点极端。但这可以让你在初始化附近释放资源和不要操心多个返回点的问题。
+
+## go fmt
 ## go fmt
 
 Most programs written in Go follow the same formatting rules, namely, a tab is used to indent and braces go on the same line as their statement.
 
+绝大多数Go写的代码遵守有一个相同的格式化规则，也就是说，使用Tab来缩进和花括号与语句同一行。
+
 I know, you have your own style and you want to stick to it. That's what I did for a long time, but I'm glad I eventually gave in. A big reason for this is the `go fmt` command. It's easy to use and authoritative (so no one argues over meaningless preferences).
 
+我知道你有自己的代码风格并且严格遵守它。我一直以来也是这么做的，但是我最终还是放弃了。一个最在的原因就是`go fmt`命令。它很容用且权威（所以没有人会为了毫无意义的偏好而争论） 
+
 When you're inside a project, you can apply the formatting rule to it and all sub-projects via:
+
+当你在一个工程目录下，你可以通过下面的命令将工程下所有文件使用相同的格式化规则：
 
 ```
 go fmt ./...
 ```
 
 Give it a try. It does more than indent your code; it also aligns field declarations and alphabetically orders imports.
+
+尝试一下吧。除了缩进代码，它还会自动对齐你的声明语句并将包导入按字母顺序排序。
 
 ## Initialized If
 
