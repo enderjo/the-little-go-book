@@ -3,9 +3,14 @@
 
 Go is often described as a concurrent-friendly language. The reason for this is that it provides a simple syntax over two powerful mechanisms: goroutines and channels.
 
+Go常被描述为是一种适用于并发的语言。是因为它在两个强大的机制提供了简法的语法支持：`go协程`和`通道`。
+
 ## Goroutines
+## Go协程
 
 A goroutine is similar to a thread, but it is scheduled by Go, not the OS. Code that runs in a goroutine can run concurrently with other code. Let's look at an example:
+
+一个Go协程和一个线程类似，只不这它是由Go,而不是系统来调度的。在协程中的代码可以和其他代码并发执行。让我们看一个例子：
 
 ```go
 package main
@@ -18,7 +23,7 @@ import (
 func main() {
   fmt.Println("start")
   go process()
-  time.Sleep(time.Millisecond * 10) // this is bad, don't do this!
+  time.Sleep(time.Millisecond * 10) // this is bad, don't do this! 这样不好，不能这么做！
   fmt.Println("done")
 }
 
@@ -29,6 +34,8 @@ func process() {
 
 There are a few interesting things going on here, but the most important is how we start a goroutine. We simply use the `go` keyword followed by the function we want to execute. If we just want to run a bit of code, such as the above, we can use an anonymous function. Do note that anonymous functions aren't only used with goroutines, however.
 
+这里有几个有趣的地方，但最重要的是我们如何开启一个Go协程。我们只是简单的使用了`go`关键字后紧跟我们需的执行的函数。如果我们只是要运行一小段代码，比如上面的例子，我们可以使用匿名函数。但是记住，匿名函数不只适用于Go协程。
+
 ```go
 go func() {
   fmt.Println("processing")
@@ -37,9 +44,15 @@ go func() {
 
 Goroutines are easy to create and have little overhead. Multiple goroutines will end up running on the same underlying OS thread. This is often called an M:N threading model because we have M application threads (goroutines) running on N OS threads. The result is that a goroutine has a fraction of overhead (a few KB) than OS threads. On modern hardware, it's possible to have millions of goroutines.
 
+Go协程创建简单和开销小。多个Go协程最终会运行在一个系统线程中。这通常称为`M:N`线程模型，因为我们有`M`个应用线程（Go协程）运行在`N`个系统线程上。结果就是，一个Go协程的开销比系统线程小（一般都是几KB）。在现代的硬件上，有可能创建成千上万个Go协程。
+
 Furthermore, the complexity of mapping and scheduling is hidden. We just say *this code should run concurrently* and let Go worry about making it happen.
 
+此外，因为隐藏了映射和调度的复杂性。我们只需要说*这段代码需要并发执行*，然后让Go自己来运行它。
+
 If we go back to our example, you'll notice that we had to `Sleep` for a few milliseconds. That's because the main process exits before the goroutine gets a chance to execute (the process doesn't wait until all goroutines are finished before exiting). To solve this, we need to coordinate our code.
+
+回到我们的例子中，你将会注意到我们使用了`Sleep`让程序等待了几毫秒。这是让主进程在退出前有机会去执行协程（主进程退出时不会等待所有协程都执行结束）。为了解决这个问题，我们必须让代码协同。
 
 ## Synchronization
 
