@@ -151,8 +151,10 @@ Give it a try. It does more than indent your code; it also aligns field declarat
 尝试一下吧。除了缩进代码，它还会自动对齐你的声明语句并将包导入按字母顺序排序。
 
 ## Initialized If
+## If初始化
 
 Go supports a slightly modified if-statement, one where a value can be initiated prior to the condition being evaluated:
+Go提供了一种稍有不同的if声明，一个可以在条件执行之前声明和初始化：
 
 ```go
 if x := 10; count > x {
@@ -162,6 +164,8 @@ if x := 10; count > x {
 
 That's a pretty silly example. More realistically, you might do something like:
 
+这是一个非常简单的例子。更实际的例子是，你可能是这样做的：
+
 ```go
 if err := process(); err != nil {
   return err
@@ -170,11 +174,18 @@ if err := process(); err != nil {
 
 Interestingly, while the values aren't available outside the if-statement, they are available inside any `else if` or `else`.
 
+有趣的是，`if`语句中定义并初始化的值在`if`语句之外是不可用的，仅可以在`else if`和`else`语句中使用。
+
 ## Empty Interface and Conversions
+## 空接口和转换
 
 In most object-oriented languages, a built-in base class, often named `object`, is the superclass for all other classes. Go, having no inheritance, doesn't have such a superclass. What it does have is an empty interface with no methods: `interface{}`. Since every type implements all 0 of the empty interface's methods, and since interfaces are implicitly implemented, every type fulfills the contract of the empty interface.
 
+在大多数面向对象语言中，都有一种内置的基类，叫`object`，它是所有其他类的超类。但是go语言不支持继承，所以没有类似的超类。Go确实有一个没有任何方法的空接口：`interface{}`。因为接口都是隐式实现，每种类型都实现了空接口的0个方法，所以每种类型都实现了空接口的协议。
+
  If we wanted to, we could write an `add` function with the following signature:
+
+如果我们愿意，我们可以通过下面声明方式写一个`add`函数：
 
 ```go
 func add(a interface{}, b interface{}) interface{} {
@@ -184,13 +195,19 @@ func add(a interface{}, b interface{}) interface{} {
 
 To convert an interface variable to an explicit type, you use `.(TYPE)`:
 
+将一个空接口变量转换成一个指定的类型，你可以使用`.(TYPE)`:
+
 ```go
 return a.(int) + b.(int)
 ```
 
 Note that if the underlying type is not `int`, the above will result in an error.
 
+需要注意如果底层类型示是一个`int`，上面的代码会导致一个错误。
+
 You also have access to a powerful type switch:
+
+你也可以通过switch使用强大的类型转换：
 
 ```go
 switch a.(type) {
@@ -205,9 +222,14 @@ switch a.(type) {
 
 You'll see and probably use the empty interface more than you might first expect. Admittedly, it won't result in clean code. Converting values back and forth is ugly and dangerous but sometimes, in a static language, it's the only choice.
 
+你会发现，空接口的使用会超出你的预期。诚然，这不会让代码变得简洁。来回转换值是丑陋和危险的，但有时候在静态类型语言中，这是唯一的选择。
+
 ## Strings and Byte Arrays
+## 字符串和字节数组
 
 Strings and byte arrays are closely related. We can easily convert one to the other:
+
+字符串和字节数组有密切关系，我们可以轻易的将它们转换成对方：
 
 ```go
 stra := "the spice must flow"
@@ -217,27 +239,39 @@ strb := string(byts)
 
 In fact, this way of converting is common across various types as well. Some functions explicitly expect an `int32` or an `int64` or their unsigned counterparts. You might find yourself having to do things like:
 
+事实上，这也是大多数类型的转换方式。一些函数明确指定一个`int32`或者`int64`或者相应的无符号类型。你可能会发现你自己不得不像下面这样做：
+
 ```go
 int64(count)
 ```
 
 Still, when it comes to bytes and strings, it's probably something you'll end up doing often. Do note that when you use `[]byte(X)` or `string(X)`, you're creating a copy of the data. This is necessary because strings are immutable.
 
+然而，当涉及到字节和字符串时，这可能是你会经常做的事。当你使用`[]byte(X)`或者`string(X)`时务必注意，你创建了数据的拷贝。这是因为字符串的不可变性。
+
 Strings are made of `runes` which are unicode code points. If you take the length of a string, you might not get what you expect. The following prints 3:
+
+当字符串有由`unicode`字符码`runes`组成时。如果你计算字符串的长度时，可能得到的结果和你期待的不同。下面结果是输出3：
 
     fmt.Println(len("椒"))
 
 If you iterate over a string using `range`, you'll get runes, not bytes. Of course, when you turn a string into a `[]byte` you'll get the correct data.
 
+如果你使用`range`迭代一个字符串，你得到的是`runes`,而不是`bytes`。当然，你将一个字符串转换为`[]byte`时，你得到的数据还是正确的。
+
 ## Function Type
+## 函数类型
 
 Functions are first-class types:
+函数是第一类类型：
 
 ```go
 type Add func(a int, b int) int
 ```
 
 which can then be used anywhere -- as a field type, as a parameter, as a return value.
+
+可以在任何地方使用————可以做为一个字段，参数，返回值。
 
 ```go
 package main
@@ -261,8 +295,15 @@ func process(adder Add) int {
 
 Using functions like this can help decouple code from specific implementations much like we achieve with interfaces.
 
+像这样使用函数可以使你在一些特定实现时减少代码的耦合性，就像使用接口实现那样。
+
 ## Before You Continue
+## 继续之前
 
 We looked at various aspects of programming with Go. Most notably, we saw how error handling behaves and how to release resources such as connections and open files. Many people dislike Go's approach to error handling. It can feel like a step backwards. Sometimes, I agree. Yet, I also find that it results in code that's easier to follow. `defer` is an unusual but practical approach to resource management. In fact, it isn't tied to resource management only. You can use `defer` for any purpose, such as logging when a function exits.
 
+我们已经学习了Go编程的很多内容。显而易见，我们看见了错误处理的行为和资源释放如连接或者打开文件。很多人不喜欢Go的错误处理方式。它让人觉得这是一种退步。有些时候，我同意这种说法。然而，我也发现这会导致代码更易读。`defer`是一种不常见但很实用的资源管理手段。事实上，它不仅仅可以进行资源管理。你可以使用`defer`完成任何目的，例如当一个函数退出时打印日志记录。
+
 Certainly, we haven't looked at all of the tidbits Go has to offer. But you should be feeling comfortable enough to tackle whatever you come across.
+
+当然，我们还没有学习Go提供的所有花絮。但是无论你遇到什么你应该可以轻松应对。
