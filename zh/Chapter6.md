@@ -505,7 +505,7 @@ Go协程有效的抽象了需要并发执行的代码。通道协助消除了可
 
 Having said that, I still make extensive use of the various synchronization primitives found in the `sync` and `sync/atomic` packages. I think it's important to be comfortable with both. I encourage you to first focus on channels, but when you see a simple example that needs a short-lived lock, consider using a mutex or read-write mutex.
 
-虽然这么说，我仍然广泛使用的各种同步原语中发现的“同步”和“同步/原子”包。我觉得这两种情况都要适应是很重要的。我鼓励你先聚焦在通道上，但是如果你碰到只是需要短暂的多锁，建议你使用互斥锁或者读写互斥锁。
+虽然这么说，我仍然广泛使用的各种同步原语中发现的`sync`和`sync/atomic`包。我觉得这两种情况都要适应是很重要的。我鼓励你先聚焦在通道上，但是如果你碰到只是需要短暂的多锁，建议你使用互斥锁或者读写互斥锁。
 
 # Conclusion
 # 结论
@@ -520,10 +520,12 @@ If you have a background in a statically typed language, much of what we saw was
 
 If you've mostly been making use of dynamic languages, you might feel a little different. It *is* a fair bit to learn. Not least of which is the various syntax around declaration and initialization. Despite being a fan of Go, I find that for all the progress towards simplicity, there's something less than simple about it. Still, it comes down to some basic rules (like you can only declare variable once and `:=` does declare the variable) and fundamental understanding (like `new(X)` or `&X{}` only allocate memory, but slices, maps and channels require more initialization and thus, `make`).
 
-如果你更多的是使用动态语言，你可能会觉得有点不同。这*是*一点公平的学习。
+如果你更多的是使用动态语言，你可能会觉得有点不同。这*是*一点公平的学习。不过其中最重要的是各种声明和初始化的语法。虽然是一个Go粉，我发现所有的努力都是为了简单，还有一些致简的东西。仍然，它也有一些基本的规则（比如变量申明一次和`:=`已经申明了变量）和基本的了解（比如`new(X)` 或 `&X{}`只是分配了内存，但切片，字典和通道就需要使用`make`来分配内存和初始化）。
 
 Beyond this, Go gives us a simple but effective way to organize our code. Interfaces, return-based error handling, `defer` for resource management and a simple way to achieve composition.
 
 除此之外，Go提供了一个简洁但又高效的方式来组织我们的代码。接口，基于返回值的错误处理，用于资源管理的`defer`和简单的实现组合。
 
 Last but not least is the built-in support for concurrency. There's little to say about goroutines other than they’re effective and simple (simple to use anyway). It's a good abstraction. Channels are more complicated. I always think it's important to understand basics before using high-level wrappers. I *do* think learning about concurrent programming without channels is useful. Still, channels are implemented in a way that, to me, doesn't feel quite like a simple abstraction. They are almost their own fundamental building block. I say this because they change how you write and think about concurrent programming. Given how hard concurrent programming can be, that is definitely a good thing.
+
+最后但是最重要的是它内置了对并发的支持。还有一点关于Go协程的要说就是它们高效和简单（反正使用简单）。这是很好的抽象。通道会更复杂一点。我一直认为在学习高级封装之前要掌握好基础。我*确认*认为不使用通道来进行并发编程是有益的。但是，通道的实现方式，对我来说，不太像是一个简单的抽象。它们有自己的基础构建。我这么说是因为它们改变了你对并发编程的思考和书写方式。鉴于并发编程的难度，这绝对是一个好事。
